@@ -161,16 +161,16 @@ func Scan() (AMDParams) {
 			stat.GPUPowerCap[i] = float64(value64)
 			value64 = 0
 
-      if 1 == goamdsmi.GO_rsmi_init() {
-				value64 = uint64(goamdsmi.GO_rsmi_dev_power_ave_get(i))
-				stat.GPUPowerAvg[i] = float64(value64)
-				value64 = 0
-      } else {
+      //if 1 == goamdsmi.GO_rsmi_init() {
+			//	value64 = uint64(goamdsmi.GO_rsmi_dev_power_ave_get(i))
+			//	stat.GPUPowerAvg[i] = float64(value64)
+			//	value64 = 0
+      //} else {
         //Todo::yet to Implement
         value64 = uint64(goamdsmi.GO_amdsmigpu_dev_power_ave_get(i))
 			  stat.GPUPowerAvg[i] = float64(value64)
 			  value64 = 0
-      }
+      //}
 
 			//Get the value for GPU current temperature. Sensor = 0(GPU), Metric = 0(current)
 			value64 = uint64(goamdsmi.GO_amdsmigpu_dev_temp_metric_get(i, 0, 0))
@@ -186,27 +186,27 @@ func Scan() (AMDParams) {
 			value64 = 0
 
 
-      if 1 == goamdsmi.GO_rsmi_init() {
-				value64 = uint64(goamdsmi.GO_rsmi_dev_gpu_busy_percent_get(i))
-				stat.GPUUsage[i] = float64(value64)
-				value64 = 0
-      } else {
+      //if 1 == goamdsmi.GO_rsmi_init() {
+			//	value64 = uint64(goamdsmi.GO_rsmi_dev_gpu_busy_percent_get(i))
+			//	stat.GPUUsage[i] = float64(value64)
+			//	value64 = 0
+      //} else {
         //Todo::yet to Implement
         value64 = uint64(goamdsmi.GO_amdsmigpu_dev_gpu_busy_percent_get(i))
         stat.GPUUsage[i] = float64(value64)
         value64 = 0
-      }
+      //}
 
-      if 1 == goamdsmi.GO_rsmi_init() {
-				value64 = uint64(goamdsmi.GO_rsmi_dev_gpu_memory_busy_percent_get(i))
-				stat.GPUMemoryUsage[i] = float64(value64)
-				value64 = 0
-      } else {
+      //if 1 == goamdsmi.GO_rsmi_init() {
+			//	value64 = uint64(goamdsmi.GO_rsmi_dev_gpu_memory_busy_percent_get(i))
+			//	stat.GPUMemoryUsage[i] = float64(value64)
+			//	value64 = 0
+      //} else {
         //Todo::yet to Implement
 			  value64 = uint64(goamdsmi.GO_amdsmigpu_dev_gpu_memory_busy_percent_get(i))
         stat.GPUMemoryUsage[i] = float64(value64)
         value64 = 0
-      }
+      //}
 		}
 	} else {	//GPU ESMI Flow
 		if 1 == goamdsmi.GO_rsmi_init() {
