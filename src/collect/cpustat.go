@@ -66,8 +66,9 @@ type AMDParams struct {
 func Scan() (AMDParams) {
 
 	var stat AMDParams
-	value64 := uint64(0)
-	value32 := uint32(0)
+	//value64 := uint64(0)
+	//value32 := uint32(0)
+	
 	value16 := uint16(0)
 
 	if 1 == goamdsmi.GO_esmi_init() {
