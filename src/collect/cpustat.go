@@ -150,8 +150,8 @@ func Scan() (AMDParams) {
 			value64 = uint64(goamdsmi.GO_rsmi_dev_gpu_memory_busy_percent_get(i))
 			stat.GPUMemoryUsage[i] = float64(value64)
 			value64 = 0
-*/
 		}
+*/
 	}
 
 	return stat
