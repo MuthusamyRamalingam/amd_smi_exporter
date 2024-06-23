@@ -66,13 +66,12 @@ type AMDParams struct {
 func Scan() (AMDParams) {
 
 	var stat AMDParams
-	//value64 := uint64(0)
-	//value32 := uint32(0)
+	value64 := uint64(0)
+	value32 := uint32(0)
 	
-	//value16 := uint16(0)
+	value16 := uint16(0)
 
 	if 1 == goamdsmi.GO_esmi_init() {
-/*
 		num_sockets := int(goamdsmi.GO_esmi_number_of_sockets_get())
 		num_threads := int(goamdsmi.GO_esmi_number_of_threads_get())
 		num_threads_per_core := int(goamdsmi.GO_esmi_threads_per_core_get())
@@ -108,12 +107,10 @@ func Scan() (AMDParams) {
 			stat.ProchotStatus[i] = float64(value32)
 			value32 = 0
 		}
-*/
 	}
 
 	
-	if 1 == goamdsmi.GO_rsmi_init() {
-/*	
+	if 1 == goamdsmi.GO_rsmi_init() {	
 		num_gpus := int(goamdsmi.GO_rsmi_num_monitor_devices())
 		stat.NumGPUs = uint(num_gpus)
 
@@ -151,7 +148,6 @@ func Scan() (AMDParams) {
 			stat.GPUMemoryUsage[i] = float64(value64)
 			value64 = 0
 		}
-*/
 	}
 
 	return stat
