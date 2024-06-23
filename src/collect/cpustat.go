@@ -69,9 +69,10 @@ func Scan() (AMDParams) {
 	//value64 := uint64(0)
 	//value32 := uint32(0)
 	
-	value16 := uint16(0)
+	//value16 := uint16(0)
 
 	if 1 == goamdsmi.GO_esmi_init() {
+/*
 		num_sockets := int(goamdsmi.GO_esmi_number_of_sockets_get())
 		num_threads := int(goamdsmi.GO_esmi_number_of_threads_get())
 		num_threads_per_core := int(goamdsmi.GO_esmi_threads_per_core_get())
@@ -80,7 +81,6 @@ func Scan() (AMDParams) {
 		stat.Threads = uint(num_threads)
 		stat.ThreadsPerCore = uint(num_threads_per_core)
 
-/*
 		for i := 0; i < num_threads ; i++ {
 			value64 = uint64(goamdsmi.GO_esmi_core_energy_get(i))
 			stat.CoreEnergy[i] = float64(value64)
@@ -113,6 +113,7 @@ func Scan() (AMDParams) {
 
 	
 	if 1 == goamdsmi.GO_rsmi_init() {
+/*	
 		num_gpus := int(goamdsmi.GO_rsmi_num_monitor_devices())
 		stat.NumGPUs = uint(num_gpus)
 
@@ -121,7 +122,6 @@ func Scan() (AMDParams) {
 			stat.GPUDevId[i] = float64(value16)
 			value16 = 0
 
-/*
 			value64 = uint64(goamdsmi.GO_rsmi_dev_power_cap_get(i))
 			stat.GPUPowerCap[i] = float64(value64)
 			value64 = 0
