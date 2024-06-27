@@ -42,59 +42,59 @@ package collect
 import "github.com/MuthusamyRamalingam/go_amd_smi"
 //import "github.com/amd/go_amd_smi"
 
-var MAX_CPU_SOCKET = 4
+var MAX_CPU_SOCKETS = 4
 var MAX_CPU_THREADS = 768
-var MAX_GPU = 24
+var MAX_GPUS = 24
 
 type AMDParams struct {
-	CoreEnergy [MAX_CPU_THREADS]float64
-	SocketEnergy [MAX_CPU_SOCKET]float64
-	CoreBoost [MAX_CPU_THREADS]float64
-	SocketPower [MAX_CPU_SOCKET]float64
-	PowerLimit [MAX_CPU_SOCKET]float64
-	ProchotStatus [MAX_CPU_SOCKET]float64
-	Sockets uint
-	Threads uint
-	ThreadsPerCore uint
-	NumGPUs uint
-	GPUDevId [MAX_GPU]float64
-	GPUPowerCap [MAX_GPU]float64
-	GPUPowerAvg [MAX_GPU]float64
-	GPUTemperature [MAX_GPU]float64
-	GPUSCLK [MAX_GPU]float64
-	GPUMCLK [MAX_GPU]float64
-	GPUUsage [MAX_GPU]float64
-	GPUMemoryUsage [MAX_GPU]float64
+	CoreEnergy [768]float64
+	SocketEnergy [4]float64
+	CoreBoost [768]float64
+	SocketPower [4]float64
+	PowerLimit [4]float64
+	ProchotStatus [4]float64
+	Sockets int
+	Threads int
+	ThreadsPerCore int
+	NumGPUs int
+	GPUDevId [24]float64
+	GPUPowerCap [24]float64
+	GPUPowerAvg [24]float64
+	GPUTemperature [24]float64
+	GPUSCLK [24]float64
+	GPUMCLK [24]float64
+	GPUUsage [24]float64
+	GPUMemoryUsage [24]float64
 }
 
 func (amdParams *AMDParams) Init() {
 
-	amdParams.Sockets = -1
-	amdParams.Threads = -1
-	amdParams.ThreadsPerCore = -1
-	amdParams.NumGPUs = -1
+	amdParams.Sockets = 0
+	amdParams.Threads = 0
+	amdParams.ThreadsPerCore = 0
+	amdParams.NumGPUs = 0
 
-	for socketloopCounter := 0; socketloopCounter < MAX_CPU_SOCKET; socketloopCounter++	{ 
-		amdParams.SocketEnergy = -1
-		amdParams.SocketPower = -1
-		amdParams.PowerLimit = -1
-		amdParams.ProchotStatus = -1
+	for socketLoopCounter := 0; socketLoopCounter < MAX_CPU_SOCKETS; socketLoopCounter++	{ 
+		amdParams.SocketEnergy[socketLoopCounter] = -1
+		amdParams.SocketPower[socketLoopCounter] = -1
+		amdParams.PowerLimit[socketLoopCounter] = -1
+		amdParams.ProchotStatus[socketLoopCounter] = -1
 	}
 	
-	for logicalCoreloopCounter := 0; logicalCoreloopCounter < MAX_CPU_THREADS; logicalCoreloopCounter++	{ 
-		amdParams.CoreEnergy = -1
-		amdParams.CoreBoost = -1
+	for logicalCoreLoopCounter := 0; logicalCoreLoopCounter < MAX_CPU_THREADS; logicalCoreLoopCounter++	{ 
+		amdParams.CoreEnergy[logicalCoreLoopCounter] = -1
+		amdParams.CoreBoost[logicalCoreLoopCounter] = -1
 	}
 	
-	for gpuloopCounter := 0; gpuloopCounter < MAX_GPU; gpuloopCounter++	{ 
-		amdParams.GPUDevId = -1
-		amdParams.GPUPowerCap = -1
-		amdParams.GPUPowerAvg = -1
-		amdParams.GPUTemperature = -1
-		amdParams.GPUSCLK = -1
-		amdParams.GPUMCLK = -1
-		amdParams.GPUUsage = -1
-		amdParams.GPUMemoryUsage = -1
+	for gpuLoopCounter := 0; gpuLoopCounter < MAX_GPUS; gpuLoopCounter++	{ 
+		amdParams.GPUDevId[gpuLoopCounter] = -1
+		amdParams.GPUPowerCap[gpuLoopCounter] = -1
+		amdParams.GPUPowerAvg[gpuLoopCounter] = -1
+		amdParams.GPUTemperature[gpuLoopCounter] = -1
+		amdParams.GPUSCLK[gpuLoopCounter] = -1
+		amdParams.GPUMCLK[gpuLoopCounter] = -1
+		amdParams.GPUUsage[gpuLoopCounter] = -1
+		amdParams.GPUMemoryUsage[gpuLoopCounter] = -1
 	}
 }
 
@@ -106,16 +106,16 @@ func Scan() (AMDParams) {
 	value64 := int(0)
 	value32 := int(0)
 	
-	value16 := uint16(0)
+	value16 := int(0)
 
 	if 1 == goamdsmi.GO_cpu_init() {
 		num_sockets := int(goamdsmi.GO_cpu_number_of_sockets_get())
 		num_threads := int(goamdsmi.GO_cpu_number_of_threads_get())
 		num_threads_per_core := int(goamdsmi.GO_cpu_threads_per_core_get())
 
-		stat.Sockets = uint(num_sockets)
-		stat.Threads = uint(num_threads)
-		stat.ThreadsPerCore = uint(num_threads_per_core)
+		stat.Sockets = int(num_sockets)
+		stat.Threads = int(num_threads)
+		stat.ThreadsPerCore = int(num_threads_per_core)
 
 		for i := 0; i < num_threads ; i++ {
 			value64 = int(goamdsmi.GO_cpu_core_energy_get(i))
@@ -149,7 +149,7 @@ func Scan() (AMDParams) {
 	
 	if 1 == goamdsmi.GO_gpu_init() {	
 		num_gpus := int(goamdsmi.GO_gpu_num_monitor_devices())
-		stat.NumGPUs = uint(num_gpus)
+		stat.NumGPUs = int(num_gpus)
 
 		for i := 0; i < num_gpus ; i++ {
 			value16 = int(goamdsmi.GO_gpu_dev_id_get(i))

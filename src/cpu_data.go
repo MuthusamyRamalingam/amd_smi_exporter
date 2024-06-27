@@ -208,7 +208,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	data := c.Data() //Call the Scan() function here and get AMDParams
 
 	for i,s := range data.CoreEnergy{
-		if uint(i) > (data.Threads - 1) {
+		if int(i) > (data.Threads - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.CoreEnergy,
@@ -216,7 +216,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.CoreBoost{
-		if uint(i) > (data.Threads - 1) {
+		if int(i) > (data.Threads - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.BoostLimit,
@@ -224,7 +224,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.SocketEnergy{
-		if uint(i) > (data.Sockets - 1) {
+		if int(i) > (data.Sockets - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.SocketEnergy,
@@ -232,7 +232,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.SocketPower{
-		if uint(i) > (data.Sockets - 1) {
+		if int(i) > (data.Sockets - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.SocketPower,
@@ -240,7 +240,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.PowerLimit{
-		if uint(i) > (data.Sockets - 1) {
+		if int(i) > (data.Sockets - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.PowerLimit,
@@ -248,7 +248,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.ProchotStatus{
-		if uint(i) > (data.Sockets - 1) {
+		if int(i) > (data.Sockets - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.ProchotStatus,
@@ -256,7 +256,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.GPUDevId{
-		if uint(i) > (data.NumGPUs - 1) {
+		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.GPUDevId,
@@ -264,7 +264,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.GPUPowerCap{
-		if uint(i) > (data.NumGPUs - 1) {
+		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.GPUPowerCap,
@@ -272,7 +272,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.GPUPowerAvg{
-		if uint(i) > (data.NumGPUs - 1) {
+		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.GPUPowerAvg,
@@ -280,7 +280,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.GPUTemperature{
-		if uint(i) > (data.NumGPUs - 1) {
+		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.GPUTemperature,
@@ -288,7 +288,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.GPUSCLK{
-		if uint(i) > (data.NumGPUs - 1) {
+		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.GPUSCLK,
@@ -296,7 +296,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	for i,s := range data.GPUMCLK{
-		if uint(i) > (data.NumGPUs - 1) {
+		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(c.GPUMCLK,
@@ -304,7 +304,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 	}
 
         for i,s := range data.GPUUsage{
-                if uint(i) > (data.NumGPUs - 1) {
+                if int(i) > (data.NumGPUs - 1) {
                         continue
                 }
                 ch <- prometheus.MustNewConstMetric(c.GPUUsage,
@@ -312,7 +312,7 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
         }
 
         for i,s := range data.GPUMemoryUsage{
-                if uint(i) > (data.NumGPUs - 1) {
+                if int(i) > (data.NumGPUs - 1) {
                         continue
                 }
                 ch <- prometheus.MustNewConstMetric(c.GPUMemoryUsage,
