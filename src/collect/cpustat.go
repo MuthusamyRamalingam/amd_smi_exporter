@@ -59,7 +59,7 @@ type AMDParams struct {
 	NumGPUs int
 	GPUDevId [24]float64
 	GPUPowerCap [24]float64
-	GPUPowerAvg [24]float64
+	GPUPower [24]float64
 	GPUTemperature [24]float64
 	GPUSCLK [24]float64
 	GPUMCLK [24]float64
@@ -89,7 +89,7 @@ func (amdParams *AMDParams) Init() {
 	for gpuLoopCounter := 0; gpuLoopCounter < MAX_GPUS; gpuLoopCounter++	{ 
 		amdParams.GPUDevId[gpuLoopCounter] = -1
 		amdParams.GPUPowerCap[gpuLoopCounter] = -1
-		amdParams.GPUPowerAvg[gpuLoopCounter] = -1
+		amdParams.GPUPower[gpuLoopCounter] = -1
 		amdParams.GPUTemperature[gpuLoopCounter] = -1
 		amdParams.GPUSCLK[gpuLoopCounter] = -1
 		amdParams.GPUMCLK[gpuLoopCounter] = -1
@@ -160,8 +160,8 @@ func Scan() (AMDParams) {
 			stat.GPUPowerCap[i] = float64(value64)
 			value64 = 0
 
-			value64 = int(goamdsmi.GO_gpu_dev_power_ave_get(i))
-			stat.GPUPowerAvg[i] = float64(value64)
+			value64 = int(goamdsmi.GO_gpu_dev_power_get(i))
+			stat.GPUPower[i] = float64(value64)
 			value64 = 0
 
 			//Get the value for GPU current temperature. Sensor = 0(GPU), Metric = 0(current)
