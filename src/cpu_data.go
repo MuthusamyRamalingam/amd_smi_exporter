@@ -61,7 +61,7 @@ type amd_data struct {
 	NumGPUs *prometheus.Desc
 	GPUDevId *prometheus.Desc
 	GPUPowerCap *prometheus.Desc
-	GPUPowerAvg *prometheus.Desc
+	GPUPower *prometheus.Desc
 	GPUTemperature *prometheus.Desc
 	GPUSCLK *prometheus.Desc
 	GPUMCLK *prometheus.Desc
@@ -150,7 +150,7 @@ func NewCollector(handle func() (collect.AMDParams)) prometheus.Collector {
 			[]string{"gpu_power_cap", "productname"},// The metric's variable label dimensions.
 			nil,// The metric's constant label dimensions.
 		),
-		GPUPowerAvg: prometheus.NewDesc(
+		GPUPower: prometheus.NewDesc(
 			prometheus.BuildFQName("amd", "", "gpu_power"),
 			"AMD Params",// The metric's help text.
 			[]string{"gpu_power", "productname"},// The metric's variable label dimensions.
@@ -271,11 +271,11 @@ func (c *amd_data) Collect(ch chan<- prometheus.Metric) {
 			prometheus.GaugeValue, float64(s), strconv.Itoa(i), gGPUProductNames[i])
 	}
 
-	for i,s := range data.GPUPowerAvg{
+	for i,s := range data.GPUPower{
 		if int(i) > (data.NumGPUs - 1) {
 			continue
 		}
-		ch <- prometheus.MustNewConstMetric(c.GPUPowerAvg,
+		ch <- prometheus.MustNewConstMetric(c.GPUPower,
 			prometheus.CounterValue, float64(s), strconv.Itoa(i), gGPUProductNames[i])
 	}
 
