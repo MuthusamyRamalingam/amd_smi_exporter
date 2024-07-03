@@ -53,7 +53,7 @@ type AMDParams struct {
 	SocketPower [4]float64
 	PowerLimit [4]float64
 	ProchotStatus [4]float64
-	Sockets int
+	Sockets uint32
 	Threads int
 	ThreadsPerCore int
 	NumGPUs int
@@ -105,15 +105,20 @@ func Scan() (AMDParams) {
 	
 	value64 := int(0)
 	value32 := int(0)
-	
 	value16 := int(0)
 
+	//value64_ := uint64(0)
+	//value32_ := uint32(0)
+	//value16_ := uint16(0)
+
 	if 1 == goamdsmi.GO_cpu_init() {
-		num_sockets := int(goamdsmi.GO_cpu_number_of_sockets_get())
+		num_sockets := uint32(0)
+		if 0 == int(goamdsmi.GO_cpu_number_of_sockets_get(&num_sockets)) {
+			stat.Sockets = uint32(num_sockets)
+		}
 		num_threads := int(goamdsmi.GO_cpu_number_of_threads_get())
 		num_threads_per_core := int(goamdsmi.GO_cpu_threads_per_core_get())
 
-		stat.Sockets = int(num_sockets)
 		stat.Threads = int(num_threads)
 		stat.ThreadsPerCore = int(num_threads_per_core)
 
