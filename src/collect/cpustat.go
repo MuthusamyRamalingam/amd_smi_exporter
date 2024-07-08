@@ -165,7 +165,7 @@ func Scan() (AMDParams) {
 
 			//Get the value for GPU current temperature. Sensor = 0(GPU), Metric = 0(current)
 			value64 = uint64(goamdsmi.GO_gpu_dev_temp_metric_get(i, 0, 0))
-			if -1 == value64 {
+			if 0xFFFFFFFFFFFFFFFF == value64 {
 				//Sensor = 1 (GPU Junction Temp)
 				value64 = uint64(goamdsmi.GO_gpu_dev_temp_metric_get(i, 1, 0))
 			}
