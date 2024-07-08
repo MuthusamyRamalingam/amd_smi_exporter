@@ -46,10 +46,14 @@ var MAX_CPU_SOCKETS = 4
 var MAX_CPU_THREADS = 768
 var MAX_GPUS = 24
 
+var UINT16_MAX = 0xFFFF
+var UINT32_MAX = 0xFFFFFFFF
+var UINT64_MAX = 0xFFFFFFFFFFFFFFFF
+
 type AMDParams struct {
 	CoreEnergy [768]float64
-	SocketEnergy [4]float64
 	CoreBoost [768]float64
+	SocketEnergy [4]float64
 	SocketPower [4]float64
 	PowerLimit [4]float64
 	ProchotStatus [4]float64
@@ -74,19 +78,19 @@ func (amdParams *AMDParams) Init() {
 	amdParams.ThreadsPerCore = 0
 	amdParams.NumGPUs = 0
 
-	for socketLoopCounter := 0; socketLoopCounter < MAX_CPU_SOCKETS; socketLoopCounter++	{ 
+	for socketLoopCounter := 0; socketLoopCounter < len(amdParams.SocketEnergy); socketLoopCounter++	{ 
 		amdParams.SocketEnergy[socketLoopCounter] = -1
 		amdParams.SocketPower[socketLoopCounter] = -1
 		amdParams.PowerLimit[socketLoopCounter] = -1
 		amdParams.ProchotStatus[socketLoopCounter] = -1
 	}
 	
-	for logicalCoreLoopCounter := 0; logicalCoreLoopCounter < MAX_CPU_THREADS; logicalCoreLoopCounter++	{ 
+	for logicalCoreLoopCounter := 0; logicalCoreLoopCounter < len(amdParams.CoreEnergy); logicalCoreLoopCounter++	{ 
 		amdParams.CoreEnergy[logicalCoreLoopCounter] = -1
 		amdParams.CoreBoost[logicalCoreLoopCounter] = -1
 	}
 	
-	for gpuLoopCounter := 0; gpuLoopCounter < MAX_GPUS; gpuLoopCounter++	{ 
+	for gpuLoopCounter := 0; gpuLoopCounter < len(amdParams.GPUDevId); gpuLoopCounter++	{ 
 		amdParams.GPUDevId[gpuLoopCounter] = -1
 		amdParams.GPUPowerCap[gpuLoopCounter] = -1
 		amdParams.GPUPower[gpuLoopCounter] = -1
@@ -165,7 +169,7 @@ func Scan() (AMDParams) {
 
 			//Get the value for GPU current temperature. Sensor = 0(GPU), Metric = 0(current)
 			value64 = uint64(goamdsmi.GO_gpu_dev_temp_metric_get(i, 0, 0))
-			if 0xFFFFFFFFFFFFFFFF == value64 {
+			if UINT64_MAX == value64 {
 				//Sensor = 1 (GPU Junction Temp)
 				value64 = uint64(goamdsmi.GO_gpu_dev_temp_metric_get(i, 1, 0))
 			}
