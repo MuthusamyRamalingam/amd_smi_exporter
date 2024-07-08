@@ -108,7 +108,7 @@ func Scan() (AMDParams) {
 	value16 := uint16(0)
 
 	if 1 == goamdsmi.GO_cpu_init() {
-		num_sockets := uint(goamdsmi.GO_cpu_number_of_sockets_get()
+		num_sockets := uint(goamdsmi.GO_cpu_number_of_sockets_get())
 		num_threads := uint(goamdsmi.GO_cpu_number_of_threads_get())
 		num_threads_per_core := uint(goamdsmi.GO_cpu_threads_per_core_get())
 
