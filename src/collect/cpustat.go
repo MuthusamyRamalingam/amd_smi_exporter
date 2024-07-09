@@ -109,15 +109,15 @@ func Scan() (AMDParams) {
 
 	var stat AMDParams
 	stat.Init()
-	/*stat.CPUInit()
-	stat.GPUInit()*/
+	stat.CPUInit()
+	stat.GPUInit()
 	
 	value64 := uint64(0)
 	value32 := uint32(0)
 	value16 := uint16(0)
 
 	if true == goamdsmi.GO_cpu_init() {
-		stat.CPUInit()
+		//stat.CPUInit()
 
 		num_sockets := int(goamdsmi.GO_cpu_number_of_sockets_get())
 		num_threads := int(goamdsmi.GO_cpu_number_of_threads_get())
@@ -158,7 +158,7 @@ func Scan() (AMDParams) {
 
 	
 	if true == goamdsmi.GO_gpu_init() {	
-		stat.GPUInit()
+		//stat.GPUInit()
 
 		num_gpus := int(goamdsmi.GO_gpu_num_monitor_devices())
 		stat.NumGPUs = uint(num_gpus)
