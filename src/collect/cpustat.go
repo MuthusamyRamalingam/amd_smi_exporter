@@ -42,9 +42,9 @@ package collect
 import "github.com/MuthusamyRamalingam/go_amd_smi"
 //import "github.com/amd/go_amd_smi"
 
-var MAX_CPU_SOCKETS = 4
+/*var MAX_CPU_SOCKETS = 4
 var MAX_CPU_THREADS = 768
-var MAX_GPUS = 24
+var MAX_GPUS = 24*/
 
 var UINT16_MAX = uint16(0xFFFF)
 var UINT32_MAX = uint32(0xFFFFFFFF)
@@ -120,7 +120,7 @@ func Scan() (AMDParams) {
 		stat.Threads = uint(num_threads)
 		stat.ThreadsPerCore = uint(num_threads_per_core)
 
-		for i := 0; i < num_threads ; i++ {
+		/*for i := 0; i < num_threads ; i++ {
 			value64 = uint64(goamdsmi.GO_cpu_core_energy_get(i))
 			stat.CoreEnergy[i] = float64(value64)
 			value64 = 0
@@ -128,7 +128,7 @@ func Scan() (AMDParams) {
 			value32 = uint32(goamdsmi.GO_cpu_core_boostlimit_get(i))
 			stat.CoreBoost[i] = float64(value32)
 			value32 = 0
-		}
+		}*/
 
 		for i := 0; i < num_sockets ; i++ {
 			value64 = uint64(goamdsmi.GO_cpu_socket_energy_get(i))
