@@ -53,10 +53,10 @@ var UINT64_MAX = uint64(0xFFFFFFFFFFFFFFFF)
 type AMDParams struct {
 	CoreEnergy [768]float64
 	CoreBoost [768]float64
-	SocketEnergy [4]float64
-	SocketPower [4]float64
-	PowerLimit [4]float64
-	ProchotStatus [4]float64
+	SocketEnergy [8]float64
+	SocketPower [8]float64
+	PowerLimit [8]float64
+	ProchotStatus [8]float64
 	Sockets uint
 	Threads uint
 	ThreadsPerCore uint
