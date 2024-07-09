@@ -190,7 +190,7 @@ func Scan() (AMDParams) {
 			if UINT64_MAX != value64 { stat.GPUMCLK[i] = float64(value64) }
 			value64 = 0
 
-			value32 = uint64(goamdsmi.GO_gpu_dev_gpu_busy_percent_get(i))
+			value32 = uint32(goamdsmi.GO_gpu_dev_gpu_busy_percent_get(i))
 			if UINT32_MAX != value32 { stat.GPUUsage[i] = float64(value32) }
 			value32 = 0
 
