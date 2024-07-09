@@ -70,14 +70,15 @@ type AMDParams struct {
 	GPUUsage [24]float64
 	GPUMemoryUsage [24]float64
 }
-
 func (amdParams *AMDParams) Init() {
-
 	amdParams.Sockets = 0
 	amdParams.Threads = 0
 	amdParams.ThreadsPerCore = 0
-	amdParams.NumGPUs = 0
 
+	amdParams.NumGPUs = 0
+}
+
+func (amdParams *AMDParams) CPUInit() {
 	for socketLoopCounter := 0; socketLoopCounter < len(amdParams.SocketEnergy); socketLoopCounter++	{ 
 		amdParams.SocketEnergy[socketLoopCounter] = -1
 		amdParams.SocketPower[socketLoopCounter] = -1
@@ -89,7 +90,9 @@ func (amdParams *AMDParams) Init() {
 		amdParams.CoreEnergy[logicalCoreLoopCounter] = -1
 		amdParams.CoreBoost[logicalCoreLoopCounter] = -1
 	}
-	
+}
+
+func (amdParams *AMDParams) GPUInit() {
 	for gpuLoopCounter := 0; gpuLoopCounter < len(amdParams.GPUDevId); gpuLoopCounter++	{ 
 		amdParams.GPUDevId[gpuLoopCounter] = -1
 		amdParams.GPUPowerCap[gpuLoopCounter] = -1
@@ -106,12 +109,16 @@ func Scan() (AMDParams) {
 
 	var stat AMDParams
 	stat.Init()
+	/*stat.CPUInit()
+	stat.GPUInit()*/
 	
 	value64 := uint64(0)
 	value32 := uint32(0)
 	value16 := uint16(0)
 
 	if true == goamdsmi.GO_cpu_init() {
+		stat.CPUInit()
+
 		num_sockets := int(goamdsmi.GO_cpu_number_of_sockets_get())
 		num_threads := int(goamdsmi.GO_cpu_number_of_threads_get())
 		num_threads_per_core := int(goamdsmi.GO_cpu_threads_per_core_get())
@@ -120,7 +127,7 @@ func Scan() (AMDParams) {
 		stat.Threads = uint(num_threads)
 		stat.ThreadsPerCore = uint(num_threads_per_core)
 
-		/*for i := 0; i < num_threads ; i++ {
+		for i := 0; i < num_threads ; i++ {
 			value64 = uint64(goamdsmi.GO_cpu_core_energy_get(i))
 			stat.CoreEnergy[i] = float64(value64)
 			value64 = 0
@@ -128,7 +135,7 @@ func Scan() (AMDParams) {
 			value32 = uint32(goamdsmi.GO_cpu_core_boostlimit_get(i))
 			stat.CoreBoost[i] = float64(value32)
 			value32 = 0
-		}*/
+		}
 
 		for i := 0; i < num_sockets ; i++ {
 			value64 = uint64(goamdsmi.GO_cpu_socket_energy_get(i))
@@ -151,6 +158,8 @@ func Scan() (AMDParams) {
 
 	
 	if true == goamdsmi.GO_gpu_init() {	
+		stat.GPUInit()
+
 		num_gpus := int(goamdsmi.GO_gpu_num_monitor_devices())
 		stat.NumGPUs = uint(num_gpus)
 
