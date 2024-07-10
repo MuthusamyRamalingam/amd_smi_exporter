@@ -73,9 +73,7 @@ func (amdParams *AMDParams) Init() {
 	amdParams.ThreadsPerCore = 0
 
 	amdParams.NumGPUs = 0
-}
-
-func (amdParams *AMDParams) CPUInit() {
+	
 	for socketLoopCounter := 0; socketLoopCounter < len(amdParams.SocketEnergy); socketLoopCounter++	{ 
 		amdParams.SocketEnergy[socketLoopCounter] = -1
 		amdParams.SocketPower[socketLoopCounter] = -1
@@ -87,9 +85,7 @@ func (amdParams *AMDParams) CPUInit() {
 		amdParams.CoreEnergy[logicalCoreLoopCounter] = -1
 		amdParams.CoreBoost[logicalCoreLoopCounter] = -1
 	}
-}
-
-func (amdParams *AMDParams) GPUInit() {
+	
 	for gpuLoopCounter := 0; gpuLoopCounter < len(amdParams.GPUDevId); gpuLoopCounter++	{ 
 		amdParams.GPUDevId[gpuLoopCounter] = -1
 		amdParams.GPUPowerCap[gpuLoopCounter] = -1
@@ -106,15 +102,12 @@ func Scan() (AMDParams) {
 
 	var stat AMDParams
 	stat.Init()
-	stat.CPUInit()
-	stat.GPUInit()
 	
 	value64 := uint64(0)
 	value32 := uint32(0)
 	value16 := uint16(0)
 
 	if true == goamdsmi.GO_cpu_init() {
-		//stat.CPUInit()
 
 		num_sockets := int(goamdsmi.GO_cpu_number_of_sockets_get())
 		num_threads := int(goamdsmi.GO_cpu_number_of_threads_get())
@@ -154,8 +147,7 @@ func Scan() (AMDParams) {
 	}
 
 	
-	if true == goamdsmi.GO_gpu_init() {	
-		//stat.GPUInit()
+	if true == goamdsmi.GO_gpu_init() {
 
 		num_gpus := int(goamdsmi.GO_gpu_num_monitor_devices())
 		stat.NumGPUs = uint(num_gpus)
