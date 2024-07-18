@@ -66,7 +66,7 @@ as a service, one needs to ensure that the e-smi , goamdsmi_shim, and
 rocm-smi library dependencies are met. Please refer to the steps to
 build and install the library dependencies in the respective README
 of these repositories. The environment variable for the LD_LIBRARY_PATH
-is to be set to "/opt/e-sms/e_smi/lib:/opt/rocm/rocm_smi/lib:/opt/goamdsmi/lib".
+is to be set to "/opt/e-sms/e_smi/lib:/opt/rocm/lib:/opt/goamdsmi/lib".
 The user may edit this environment variable to reflect the installation path
 where the dependent libraries are installed.
 
@@ -89,11 +89,12 @@ To install the binary in /usr/local/bin, and install the service file in
 
 Before executing the GO exporter as a standalone executable or as a service, one needs to ensure
 that the e-smi , goamdsmi_shim, and rocm-smi library dependencies are met by ensuring that they are
-installed in the "/opt/e-sms/e_smi/lib", "/opt/goamdsmi/lib" and "/opt/rocm/rocm_smi/lib" directories
-respectively. Please refer to <https://github.com/amd/esmi_ib_library/docs/README.md>,
-<https://github.com/amd/go_amd_smi/README.md>, and
-<https://github.com/RadeonOpenCompute/rocm_smi_lib/README.md> for the build and installation
-instructions.
+installed in the "/opt/e-sms/e_smi/lib", "/opt/goamdsmi/lib" and "/opt/rocm/lib" directories
+respectively. Please refer to 
+<https://github.com/amd/esmi_ib_library/blob/master/docs/README.md>,
+<https://github.com/amd/go_amd_smi/blob/master/README.md>, and
+<https://github.com/RadeonOpenCompute/rocm_smi_lib/blob/master/README.md>
+ for the build and installation instructions.
 
 <a name="kernel"></a>
 # Kernel dependencies
@@ -148,7 +149,7 @@ or as a daemonSet of a kubernetes deployment).
 Prerequisite: To ensure that AMD custom parameters defined in the 
 amd-smi-custom-rules.yml file are found in the promql queries, add 
 the following rule_files and scrape_configs to the 
-/usr/local/bin/prometheus/prometheus.yml file:
+/etc/prometheus/prometheus.yml file:
 
 rule_files:
   - "amd-smi-custom-rules.yml"
@@ -162,7 +163,7 @@ scrape_configs:
 
 Please ensure that the prometheus systemd service is installed in
 /etc/systemd/system/prometheus.service and that it is running with 
-the configs specified in /usr/local/bin/prometheus/prometheus.yml.
+the configs specified in /etc/prometheus/prometheus.yml.
 
 ## 1. The GO exporter may be run manually by executing the "amd_smi_exporter" GO binary
 
@@ -173,7 +174,7 @@ the configs specified in /usr/local/bin/prometheus/prometheus.yml.
 ## 2. The GO exporter may be started as a systemd daemon as follows:
 
 NOTE: The environment variable for the LD_LIBRARY_PATH is set to
-/opt/e-sms/e_smi/lib:/opt/rocm/rocm_smi/lib:/opt/goamdsmi/lib
+/opt/e-sms/e_smi/lib:/opt/rocm/lib:/opt/goamdsmi/lib
 
 	```$ sudo systemctl daemon-reload```
 
@@ -183,7 +184,12 @@ NOTE: The environment variable for the LD_LIBRARY_PATH is set to
 
 # ** OR **
 
-## 3. The GO exporter may be executed as a containerized micro service that may be started by
+## 3. Refer to configuration steps here
+   - [Prometheus configuration](https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/#how-to-install-and-configure-prometheus-grafana-and-node-exporter)
+
+# ** OR **
+
+## 4. The GO exporter may be executed as a containerized micro service that may be started by
    hand or as a kubernetes daemonSet, as shown below:
 
 NOTE: It is assumed that the user has a running docker daemon and a kubernetes cluster.
@@ -216,6 +222,7 @@ NOTE: It is assumed that the user has a running docker daemon and a kubernetes c
 # Supported hardware
 
 AMD Zen3 based CPU Family `19h` Models `0h-Fh` and `30h-3Fh`, and `17h` Model `30h`.
+AMD APU based Family `19h` Models `90h-9fh` and mi300x models.
 
 <a name="sw"></a>
 # Additional required software for building
