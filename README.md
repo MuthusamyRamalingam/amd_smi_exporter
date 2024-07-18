@@ -18,15 +18,16 @@ e. [Custom rules](#custom)
 
 The AMD SMI Exporter is a standalone app that can be run as a daemon, written in GO Language,
 that exports AMD CPU  & GPU metrics to the Prometheus server. The AMD SMI Prometheus Exporter
-employs the [E-SMI In-Band C library](https://github.com/amd/esmi_ib_library.git) &
-[ROCm SMI Library](https://github.com/RadeonOpenCompute/rocm_smi_lib.git) for its data
+employs the [E-SMI In-Band C library](https://github.com/amd/esmi_ib_library.git),
+[ROCm SMI Library](https://github.com/RadeonOpenCompute/rocm_smi_lib.git) &
+[AMDSMI Library](https://github.com/ROCm/amdsmi) for its data
 acquisition. The exporter and the E-SMI/ROCm-SMI library have a
 [GO binding](https://github.com/amd/go_amd_smi.git) that provides an interface between the
-e-smi,rocm-smi C,C++ library and the GO exporter code.
+e-smi,rocm-smi,amdsmi C,C++ library and the GO exporter code.
 
 ## Important note about Versioning and Backward Compatibility
 
-The AMD SMI Exporter follows the E-SMI In-band library and the ROCm library in its releases,
+The AMD SMI Exporter follows the E-SMI In-band library, the ROCm library and the AMDSMI library in its releases,
 as it is dependent on the underlying libraries for its data. The Exporter is currently under
 development, and therefore subject to change in the features it offers and at the interface
 with the GO binding.
@@ -62,11 +63,11 @@ The GO Exporter may be built from the src directory as follows:
 	```amd_smi_exporter/src$ make clean```
 
 NOTE: Before executing the GO exporter as a standalone executable or
-as a service, one needs to ensure that the e-smi , goamdsmi_shim, and
-rocm-smi library dependencies are met. Please refer to the steps to
+as a service, one needs to ensure that the e-smi , goamdsmi_shim, 
+rocm-smi library and amdsmi library dependencies are met. Please refer to the steps to
 build and install the library dependencies in the respective README
 of these repositories. The environment variable for the LD_LIBRARY_PATH
-is to be set to "/opt/e-sms/e_smi/lib:/opt/rocm/lib:/opt/goamdsmi/lib".
+is to be set to "/opt/e-sms/e_smi/lib:/opt/rocm/lib:/opt/rocm/lib64:/opt/goamdsmi/lib".
 The user may edit this environment variable to reflect the installation path
 where the dependent libraries are installed.
 
@@ -88,12 +89,13 @@ To install the binary in /usr/local/bin, and install the service file in
 # Library dependencies
 
 Before executing the GO exporter as a standalone executable or as a service, one needs to ensure
-that the e-smi , goamdsmi_shim, and rocm-smi library dependencies are met by ensuring that they are
-installed in the "/opt/e-sms/e_smi/lib", "/opt/goamdsmi/lib" and "/opt/rocm/lib" directories
+that the e-smi , goamdsmi_shim, rocm-smi and amdsmi library dependencies are met by ensuring that they are
+installed in the "/opt/e-sms/e_smi/lib", "/opt/goamdsmi/lib", "/opt/rocm/lib" and "/opt/rocm/lib64" directories
 respectively. Please refer to 
 <https://github.com/amd/esmi_ib_library/blob/master/docs/README.md>,
-<https://github.com/amd/go_amd_smi/blob/master/README.md>, and
-<https://github.com/RadeonOpenCompute/rocm_smi_lib/blob/master/README.md>
+<https://github.com/amd/go_amd_smi/blob/master/README.md>,
+<https://github.com/RadeonOpenCompute/rocm_smi_lib/blob/master/README.md>, and
+<https://github.com/ROCm/amdsmi/blob/master/README.md> 
  for the build and installation instructions.
 
 <a name="kernel"></a>
@@ -174,7 +176,7 @@ the configs specified in /etc/prometheus/prometheus.yml.
 ## 2. The GO exporter may be started as a systemd daemon as follows:
 
 NOTE: The environment variable for the LD_LIBRARY_PATH is set to
-/opt/e-sms/e_smi/lib:/opt/rocm/lib:/opt/goamdsmi/lib
+/opt/e-sms/e_smi/lib:/opt/rocm/lib:/opt/rocm/lib64:/opt/goamdsmi/lib
 
 	```$ sudo systemctl daemon-reload```
 
