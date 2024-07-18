@@ -19,8 +19,8 @@ e. [Custom rules](#custom)
 The AMD SMI Exporter is a standalone app that can be run as a daemon, written in GO Language,
 that exports AMD CPU  & GPU metrics to the Prometheus server. The AMD SMI Prometheus Exporter
 employs the [E-SMI In-Band C library](https://github.com/amd/esmi_ib_library.git),
-[ROCm SMI Library](https://github.com/RadeonOpenCompute/rocm_smi_lib.git) &
-[AMDSMI Library](https://github.com/ROCm/amdsmi) for its data
+[ROCm SMI Library](https://github.com/ROCm/rocm_smi_lib.git) &
+[AMDSMI Library](https://github.com/ROCm/amdsmi.git) for its data
 acquisition. The exporter and the E-SMI/ROCm-SMI library have a
 [GO binding](https://github.com/amd/go_amd_smi.git) that provides an interface between the
 e-smi,rocm-smi,amdsmi C,C++ library and the GO exporter code.
@@ -94,7 +94,7 @@ installed in the "/opt/e-sms/e_smi/lib", "/opt/goamdsmi/lib", "/opt/rocm/lib" an
 respectively. Please refer to 
 <https://github.com/amd/esmi_ib_library/blob/master/docs/README.md>,
 <https://github.com/amd/go_amd_smi/blob/master/README.md>,
-<https://github.com/RadeonOpenCompute/rocm_smi_lib/blob/master/README.md>, and
+<https://github.com/ROCm/rocm_smi_lib/blob/master/README.md>, and
 <https://github.com/ROCm/amdsmi/blob/master/README.md> 
  for the build and installation instructions.
 
