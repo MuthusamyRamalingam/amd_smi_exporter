@@ -190,7 +190,7 @@ func Scan() (AMDParams) {
 			if UINT64_MAX != value64 { stat.GPUMemoryUsage[i] = float64(value64) }
 			value64 = 0
 
-			if true == goamdsmi.GO_gpu_accumulate_hsmp_metrices() {
+			if true == goamdsmi.GO_gpu_accumulate_hsmp_metrices(i) {
 				value64 = uint64(goamdsmi.GO_gpu_gfx_busy_acc_get(i))
 				value64 = 0
 
