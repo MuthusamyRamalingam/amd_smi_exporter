@@ -189,6 +189,26 @@ func Scan() (AMDParams) {
 			value64 = uint64(goamdsmi.GO_gpu_dev_gpu_memory_busy_percent_get(i))
 			if UINT64_MAX != value64 { stat.GPUMemoryUsage[i] = float64(value64) }
 			value64 = 0
+
+			if true == goamdsmi.GO_gpu_accumulate_hsmp_metrices() {
+				value64 = uint64(goamdsmi.GO_gpu_gfx_busy_acc_get(i))
+				value64 = 0
+
+				value32 = uint32(goamdsmi.GO_gpu_ppt_residency_acc_get(i))
+				value32 = 0
+
+				value32 = uint32(goamdsmi.GO_gpu_thermal_residency_acc_get(i))
+				value32 = 0
+
+				value32 = uint32(goamdsmi.GO_gpu_gfx_busy_get(i))
+				value32 = 0
+
+				value32 = uint32(goamdsmi.GO_gpu_pviol_percent_get(i))
+				value32 = 0
+
+				value32 = uint32(goamdsmi.GO_gpu_tviol_percent_get(i))
+				value32 = 0
+			}
 		}
 	}
 
