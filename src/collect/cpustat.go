@@ -117,7 +117,7 @@ func Scan() (AMDParams) {
 		stat.Threads = uint(num_threads)
 		stat.ThreadsPerCore = uint(num_threads_per_core)
 
-		for i := 0; i < num_threads ; i++ {
+		/*for i := 0; i < num_threads ; i++ {
 			value64 = uint64(goamdsmi.GO_cpu_core_energy_get(i))
 			if UINT64_MAX != value64 { stat.CoreEnergy[i] = float64(value64) }
 			value64 = 0
@@ -125,7 +125,7 @@ func Scan() (AMDParams) {
 			value32 = uint32(goamdsmi.GO_cpu_core_boostlimit_get(i))
 			if UINT32_MAX != value32 { stat.CoreBoost[i] = float64(value32) }
 			value32 = 0
-		}
+		}*/
 
 		for i := 0; i < num_sockets ; i++ {
 			value64 = uint64(goamdsmi.GO_cpu_socket_energy_get(i))
@@ -157,7 +157,7 @@ func Scan() (AMDParams) {
 			if UINT16_MAX != value16 { stat.GPUDevId[i] = float64(value16) }
 			value16 = 0
 
-			value64 = uint64(goamdsmi.GO_gpu_dev_power_cap_get(i))
+			/*value64 = uint64(goamdsmi.GO_gpu_dev_power_cap_get(i))
 			if UINT64_MAX != value64 { stat.GPUPowerCap[i] = float64(value64) }
 			value64 = 0
 
@@ -188,7 +188,7 @@ func Scan() (AMDParams) {
 
 			value64 = uint64(goamdsmi.GO_gpu_dev_gpu_memory_busy_percent_get(i))
 			if UINT64_MAX != value64 { stat.GPUMemoryUsage[i] = float64(value64) }
-			value64 = 0
+			value64 = 0*/
 
 			if true == goamdsmi.GO_gpu_accumulate_hsmp_metrices(i) {
 				value64 = uint64(goamdsmi.GO_gpu_gfx_busy_acc_get(i))
